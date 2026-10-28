@@ -53,7 +53,13 @@ module Sablon
 
     def render(context, properties = {})
       # initialize environment
-      @document = Sablon::DOM::Model.new(Zip::File.open(@path))
+      @document = Sablon::DOM::Model.new(
+        if defined?(Zip::VERSION) && Gem::Version.new(Zip::VERSION) >= Gem::Version.new('3.0.0')
+          Zip::File.open(@path, create: !File.exist?(@path))
+        else
+          Zip::File.open(@path, !File.exist?(@path))
+        end
+      )
       env = Sablon::Environment.new(self, context)
       env.section_properties = properties
       #
@@ -65,7 +71,7 @@ module Sablon
       end
     end
 
-    # Processes all of te entries searching for ones that match the pattern.
+    # Processes all of the entries searching for ones that match the pattern.
     # The hash is converted into an array first to avoid any possible
     # modification during iteration errors (i.e. creation of a new rels file).
     def process(env)

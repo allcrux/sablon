@@ -203,7 +203,7 @@ class ContentWordMLTest < Sablon::TestCase
     Sablon.content(:word_ml, @word_ml).append_to @paragraph, @node, @env
 
     # Only a single insertion should work because the node that we insert
-    # the content afer contains a merge field that needs removed. That means
+    # the content after contains a merge field that needs removed. That means
     # in the next two appends the @node variable doesn't exist on the document
     # tree
     output = <<-XML.gsub(/^\s+|\n/, '')
@@ -252,7 +252,10 @@ class ContentImageTest < Sablon::TestCase
     #
     # set some rid's and retest
     @expected.rid_by_file['word/test.xml'] = 'rId1'
-    assert_equal '#<Image r2d2.jpg:{"word/test.xml"=>"rId1"}>', @expected.inspect
+    assert_includes [
+      '#<Image r2d2.jpg:{"word/test.xml"=>"rId1"}>',
+      '#<Image r2d2.jpg:{"word/test.xml" => "rId1"}>'
+    ], @expected.inspect
   end
 
   def test_wraps_image_from_string_path

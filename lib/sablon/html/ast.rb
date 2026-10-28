@@ -42,7 +42,7 @@ module Sablon
       end
 
       # handles conversion of a single attribute allowing recursion through
-      # super classes. If the key exists and conversion is succesful a
+      # super classes. If the key exists and conversion is successful a
       # symbol is returned to avoid conflicts with a CSS prop sharing the
       # same name. Keys without a conversion class are returned as is
       def self.convert_style_property(key, value)
@@ -88,7 +88,7 @@ module Sablon
         ' ' + @attributes.map { |k, v| %(#{k}="#{v}") }.join(' ')
       end
 
-      # Acts like an abstract method allowing subclases full flexibility to
+      # Acts like an abstract method allowing subclasses full flexibility to
       # define any content inside the tags.
       def children_to_docx
         ''
@@ -205,7 +205,7 @@ module Sablon
     # Manages the child nodes of a list type tag
     class List < Collection
       def initialize(env, node, properties)
-        # intialize values
+        # initialize values
         @list_tag = node.name
         #
         @definition = nil
@@ -478,7 +478,7 @@ module Sablon
     # Create a run of text in the document, runs cannot be nested within
     # each other
     class Run < Node
-      PROPERTIES = %w[b i caps color dstrike emboss imprint highlight outline
+      PROPERTIES = %w[b i caps color del dstrike emboss imprint highlight outline
                       rStyle shadow shd smallCaps strike sz u vanish
                       vertAlign rFonts].freeze
 
